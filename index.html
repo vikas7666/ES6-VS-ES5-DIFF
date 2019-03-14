@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Diffrence between Es5 & Es6</title>
+</head>
+
+<body>
+<!--
+    https://medium.com/@muthuks/difference-between-es-5-and-es-6-e993c7ab0a70
+-->
+    
+    <!-- -------------- template(` `) literal declaration----------------- -->
+    <script>
+        let name = 'vikas';
+
+        // 1) ES5 we can achieved this buy using escape charcater
+
+        // console.log("My name is \'" + name + "\' "); //op  My name is 'vikas' 
+
+        // we used template literal and $ for value fetch in Es6
+        //console.log(`My name is ${name}`);   // My name is vikas
+
+
+        // 2) < ------------------------- Functions ES5 ---------------------- >
+
+        // Normal function
+        function normal(args1, args2) {
+            //console.log('Normal Function');
+        }
+
+        // Function Constructor (Not used so much)
+        var str = new Function("args1", "args2", "console.log('function constructor')");
+
+        //Function literals (using anonymous functions)
+
+        var annon = function (args1, args2) {
+            //console.log() // called by using annon() variable 
+        }
+
+        // 2)  < -------------------------Arrow  Functions ES6 ---------------------- >
+
+        var str = () => {
+            // console.log('arrow function work') //op arrow function work
+        }
+        str();
+
+        // arrow function with arguments declaration 
+
+        var argument = (args1) => {
+            // console.log(args1)            //op 5
+        }
+        argument(5);
+
+        // Another way arrow function declaration
+
+        var another = args1 => {
+            //console.log('arrow function other way') //op arrow function other way
+        }
+        another();
+
+        // function declaration is if object literal 
+
+        var obj = func => ({
+            id: 1,
+            name: 'object literal '
+        });
+        obj();
+
+        // console.log(obj()) // op  id: 1 name: "object literal "
+
+        // <-----------------  Behavioral difference of this ------------->
+
+        // 3) Method Call
+
+        var obj = {
+            value: 10,
+            show: function () {
+                console.log(this.value);
+            }
+        }
+        // console.log(obj.show());
+
+        // 3) Function
+        function this_work() {
+            var value = 10;
+            console.log(this.value);
+        }
+        //this_work();  // op undefined bcz of this not working in function
+
+        // calling the constructor 
+
+        function Obj(value) {
+            this.value = value;
+        }
+        var obj = new Obj(0);
+        console.log(obj.value);
+
+        // --------------------- Arrow function ------------------------   
+        var obj = {
+            value: 10,
+            // Method call
+            show: function () {
+                console.log(this.value); // 10
+                // Function call
+                function show_01() {
+                    console.log(this.value); // undefined
+                }
+                show_01();
+                // Arrow function
+                var show_02 = () => {
+                    console.log(this.value); // 10 this refers to obj
+                }
+                show_02();
+            }
+        }
+        obj.show();
+
+
+        /// var let const 
+        
+        // means we can change var variable value but let variable not 
+        // VAR VARIABLE 
+        var x = 10;
+        x = 15;
+        console.log(x); // 15
+        var x = 12;
+        console.log(x); // 12
+
+        // LET VARIAVBEL 
+        let x = 10;
+        x = 15;
+        console.log(x); // 15
+        let x = 12; // Identifier 'x' has already been declared
+
+        // CONST 
+        const x = 10;
+        console.log(x); // 10
+        x = 15; // TypeError: Assignment to constant variable.
+
+        // WE CAN CHANGE CONSTANT VARIABLE BUT REFRENCE ONLY 
+
+        var ary1 = () => {
+            const aryFalse = [1, 2, 3];
+            aryFalse = [4, 5, 6]; // Error
+            console.log(aryFalse);
+        }
+        ary1(); // Error
+        var ary2 = () => {
+            const aryTrue = [1, 2, 3];
+            aryTrue[1] = 10;
+            console.log(aryTrue);
+        }
+        ary2(); // [1, 10, 3]
+
+
+        // Block scope of variables
+
+        if (true) {
+            var i = 0;
+        }
+        console.log(i); // 0
+        if (true) {
+            let j = 10;
+        }
+        console.log(j); // ReferenceError
+        if (true) {
+            const k = 100;
+        }
+        console.log(k); // ReferenceError
+
+        // But Global Work 
+        const i = 5;
+        if (true) {
+            sonsole.log(i); // 5
+        }
+
+        // Class declaration
+
+        //ES5 used prototype 
+        var Add = function (arg1, arg2) {
+            this.arg1 = arg1;
+            this.arg2 = arg2;
+        };
+        Add.prototype.calc = function () {
+            return this.arg1 + '+' + this.arg2 + '=' + (this.arg1 + this.arg2);
+        };
+        var num = new Add(5, 8);
+        console.log(num.calc()); // 5 + 8 = 13
+
+        //ES6 used class based
+        class Add {
+            constructor(arg1, arg2) {
+                this.arg1 = arg1;
+                this.arg2 = arg2;
+            }
+            calc() {
+                return this.arg1 + '+' + this.arg2 + '=' + (this.arg1 + this.arg2);
+            }
+        }
+        var num = new Add(5, 8);
+        console.log(num.calc()); // 5 + 8 = 13
+
+    </script>
+</body>
+
+</html>
